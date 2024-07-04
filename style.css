@@ -91,7 +91,6 @@ body:not(.won) > #cards_container > .card:hover > svg{
 }
 
 .card.coin.won > svg{
-    animation: won_animation 2s linear;
 
     transition: 0.6s ease-in-out;
     transform: scale(1.2, 1.2) !important;
