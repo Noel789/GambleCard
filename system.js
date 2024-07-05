@@ -32,67 +32,33 @@ var sound = {
 
 // --------------------------------------- card function --------------------------------------- //
 function create_card(type){
+    
     let card = document.createElement("svg")
+    let card_back = document.createElement("svg")
+    let card_main = document.createElement("svg")
 
-    // generate card by type
-    switch (type) {
-        case "back":
+    card.appendChild(card_back)
+    card.appendChild(card_main)
 
-            card.setAttribute("id", "card_back"); card.setAttribute("class", "card back")
+    // setup card
+    new Promise(() =>{
 
-            // async for scale animation
-            new Promise(() => {
-                // do
-                card.style.transform = 'scale(0,1)'
-                card.innerHTML = card_svg.back
-                
-                // then
-                setTimeout(() => {
-                    card.style.transform = 'scale(1,1)'
-                }, card_animation_timer)
-            })
-
-        break;
-    
-        case "coin":
-
-            card.setAttribute("id", "card_coin"); card.setAttribute("class", "card back")
-
-            // async for scale animation
-            new Promise(() => {
-                // do
-                card.style.transform = 'scale(0,1)'
-                card.innerHTML = card_svg.back
-                
-                // then
-                setTimeout(() => {
-                    card.style.transform = 'scale(1,1)'
-                }, card_animation_timer)
-            })
-
-        break;
-            
-        case "death":
-
-            card.setAttribute("id", "card_death"); card.setAttribute("class", "card back")
-
-            // async for scale animation
-            new Promise(() => {
-                // do
-                card.style.transform = 'scale(0,1)'
-                card.innerHTML = card_svg.back
-                
-                // then
-                setTimeout(() => {
-                    card.style.transform = 'scale(1,1)'
-                }, card_animation_timer)
-            })
+        card.style.transform = 'scale(0,1)'
         
-        break;
-    
-        default:
-            break;
-    }
+        setTimeout(()=>{
+            card_back.innerHTML = card_svg.back
+            card_main.innerHTML = card_svg[type]
+
+            card.style.transform = 'scale(1,1)'
+
+        }, card_animation_timer)
+    })
+
+    card.setAttribute("id", `card_${type}`); card.setAttribute("class", "card back")
+
+    card.style.width = "166px"; card.style.height = "222px"
+    card_back.style.position = "absolute"
+    card_main.style.position = "absolute"; card_main.style.display = "none"
 
     card.setAttribute("onclick", "if(!is_won) flip(this);")
     card.setAttribute("onmouseenter", "if(!is_won) play(sound.hover)")
@@ -151,29 +117,38 @@ function flip (card, revealing = false){
             
             switch (type) {
                 case "back":
-                        card.innerHTML = card_svg.back
-                        card.classList.replace("coin", "back")
-                        card.classList.replace("death", "back")
-                        //card.setAttribute("id", "card_back")
-                    break;
+                    //card.innerHTML = card_svg.back
+                    card.classList.replace("coin", "back")
+                    card.classList.replace("death", "back")
+                    //card.setAttribute("id", "card_back")
+
+                    card.children[0].style.display = "block"
+                    card.children[1].style.display = "none"
+                break;
             
                 case "coin":
-                        card.innerHTML = card_svg.coin
-                        card.classList.replace("back", "coin")
-                        card.classList.replace("death", "coin")
-                        //card.setAttribute("id", "card_coin")
-                    break;
+                    //card.innerHTML = card_svg.coin
+                    card.classList.replace("back", "coin")
+                    card.classList.replace("death", "coin")
+                    //card.setAttribute("id", "card_coin")
+
+                    card.children[1].style.display = "block"
+                    card.children[0].style.display = "none"
+                break;
             
                 case "death":
-                        card.innerHTML = card_svg.death
-                        card.classList.replace("back", "death")
-                        card.classList.replace("coin", "death")
-                        //card.setAttribute("id", "card_death")
-                    break;
+                    //card.innerHTML = card_svg.death
+                    card.classList.replace("back", "death")
+                    card.classList.replace("coin", "death")
+                    //card.setAttribute("id", "card_death")
+
+                    card.children[1].style.display = "block"
+                    card.children[0].style.display = "none"
+                break;
             
                 default:
                     console.log("misspell")
-                    break;
+                break;
             }
 
             card.style.transform = 'scale(1,1)'

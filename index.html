@@ -36,7 +36,7 @@
     </div>
 
     <!----------------------------- restart button ----------------------------->
-    <button type="button" id="reset" class="button" onclick="if(is_won){reset(); play(sound.click)}"> <p> restart </p> </button>
+    <button type="button" id="reset" class="button" onclick="if(is_won){new Promise( () => {reset(); play(sound.click)})}"> <p> restart </p> </button>
     
 </body>
 
