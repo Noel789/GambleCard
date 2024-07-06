@@ -21,13 +21,12 @@ var won_range = card_amount -1
 var difficulties = "easy"
 
 // set up sound
-var sound = {
-    flip: "./sound/flip.ogg",
-    hover: "./sound/hover.ogg",
-    click: "./sound/click.ogg",
-    swing: "./sound/swing.ogg",
-    win: "./sound/win.ogg",
-}
+var sound = {}
+sound['flip'] = document.getElementById("sound_flip")
+sound['hover'] = document.getElementById("sound_hover")
+sound['click'] = document.getElementById("sound_click")
+sound['swing'] = document.getElementById("sound_swing")
+sound['win'] = document.getElementById("sound_win")
 
 
 // --------------------------------------- card function --------------------------------------- //
@@ -263,14 +262,12 @@ cards_container.style.transform = `translate(-50%, -50%) scale( ${screen_ratio/2
 
 // --------------------------------------- audio --------------------------------------- //
 function play(path) {
+    
     let audio  = new Audio();
-    let source  = document.createElement("source");
-    source.type = "audio/ogg";
-    source.src  = path;
-
-    audio.appendChild(source);
+    
+    audio.appendChild(path);
     audio.play()
-    audio.remove()
+    audio.remove()     
 }
 
 
@@ -280,9 +277,11 @@ function preload_audio(){
         let path = sound[key]
 
         const audio = new Audio()
-        audio.src = path
+        audio.appendChild(path)
         audio.preload = "auto"
 
+        audio.play()
+        audio.muted = true
         audio.remove()
     })
 }
